@@ -1,7 +1,5 @@
-const arm = document.querySelector('#arm');
-const add = document.querySelector('#add');
-const subtract = document.querySelector('#subtract');
-const stats = document.querySelectorAll('[data-stat]');
+const control = document.querySelectorAll('[data-control]');
+const stat = document.querySelectorAll('[data-stat]');
 const parts = {
     "arms": {
         "strength": 29,
@@ -36,8 +34,6 @@ const parts = {
     }
 }
 
-const control = document.querySelectorAll('.controle-ajuste');
-
 control.forEach((element) => {
     element.addEventListener('click', (event) => {
         handleData(event.target.dataset.control, event.target.parentNode);
@@ -45,13 +41,18 @@ control.forEach((element) => {
     })
 })
 
-function handleData(operation) {
+function handleData(operation, control) {
+    const part = control.querySelector('[data-counter]');
+
     if (operation === '-') {
-        arm.value = parseInt(arm.value) - 1;
+        part.value = parseInt(part.value) - 1;
     } else {
-        arm.value = parseInt(arm.value) + 1;
+        part.value = parseInt(part.value) + 1;
     }
 }
 
-function updateStats() {
+function updateStats(part) {
+    stat.forEach( (element) => {
+        element.textContent = parseInt(element.textContent) + parts[part][element.dataset.stat];
+    })
 }
